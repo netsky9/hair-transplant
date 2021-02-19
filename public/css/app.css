@@ -1,0 +1,19 @@
+@import url(https://fonts.googleapis.com/css?family=Raleway:300,400,600);
+html, body {
+  background-color: #fff;
+  color: #636b6f;
+  font-family: "Raleway", sans-serif;
+  height: 100vh;
+  margin: 0;
+}
+
+.black-pagination .page-link {
+  color: black;
+}
+.black-pagination .page-item.active .page-link {
+  background-color: #343a40;
+  border-color: #343a40;
+}
+.black-pagination .page-item .page-link:focus {
+  box-shadow: none;
+}
