@@ -1,7 +1,7 @@
 <?php
-
 use Illuminate\Support\Facades\Route;
 
+use \App\Http\Controllers\ContactController;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -14,5 +14,40 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('/', function () {
-    return view('welcome');
+    return view('home');
+})->name('home');
+
+Route::get('/about', function () {
+    return view('about');
+})->name('about');
+
+Route::get('/contact', function () {
+    return view('contact');
+})->name('contact');
+
+Route::post('/contact/form', [ContactController::class, 'submit'])->name('contact-form');
+
+// неймспейс - это папка
+Route::prefix('blog')->namespace('\App\Http\Controllers\Blog')->group(function () {
+    Route::resource('posts', PostController::class, [
+        'names'=>'blog.posts'
+    ]);
+});
+
+Route::prefix('admin/blog')->namespace('\App\Http\Controllers\Blog\Admin')->group(function () {
+    /**
+     * Categories routes
+     */
+    Route::resource('categories', CategoryController::class, [
+        'only'=>['index', 'edit', 'store', 'update', 'create'],
+        'names'=>'blog.admin.categories'
+    ]);
+
+    /**
+     * Posts routes
+     */
+    Route::resource('posts', PostController::class, [
+        'only'=>['index', 'edit', 'store', 'update', 'create'],
+        'names'=>'blog.admin.posts'
+    ]);
 });
