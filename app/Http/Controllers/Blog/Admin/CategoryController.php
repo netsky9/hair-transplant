@@ -52,10 +52,6 @@ class CategoryController extends BaseController
     {
         $category = $request->input();
 
-//        if(empty($category['slug'])){
-//            $category['slug'] = str_slug($category['title']);
-//        }
-
         $result = (new BlogCategory)->create($category);
 
         if($result){
@@ -67,17 +63,6 @@ class CategoryController extends BaseController
                     ->withErrors(['msg'=>'The category was not added! Please try again!'])
                     ->withInput();
         }
-    }
-
-    /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function show($id)
-    {
-        //
     }
 
     /**

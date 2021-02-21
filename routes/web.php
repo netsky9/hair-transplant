@@ -47,7 +47,7 @@ Route::prefix('admin/blog')->namespace('\App\Http\Controllers\Blog\Admin')->grou
      * Posts routes
      */
     Route::resource('posts', PostController::class, [
-        'only'=>['index', 'edit', 'store', 'update', 'create'],
         'names'=>'blog.admin.posts'
     ]);
 });
+Route::get('admin/blog/posts/restore/{post}', [\App\Http\Controllers\Blog\Admin\PostController::class, 'restore'])->name('blog.admin.posts.restore');

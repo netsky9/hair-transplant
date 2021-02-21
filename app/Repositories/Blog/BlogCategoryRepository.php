@@ -41,11 +41,12 @@ class BlogCategoryRepository extends CoreRepository {
         return $result;
     }
 
-    public function GetAllWithPagination($count = 10){
+    public function GetAllWithPagination($count = 20){
         $columns = ['id', 'parent_id', 'title'];
 
         $result = $this
             ->instanceModel()
+            ->with('parentCategory:id,title')
             ->paginate($count, $columns);
 
         return $result;

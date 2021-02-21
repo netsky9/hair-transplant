@@ -29,7 +29,7 @@
             <tr>
                 <th scope="row">{{ $item->id }}</th>
                 <td><a href="{{ route('blog.admin.categories.edit', $item->id) }}">{{ $item->title }}</a></td>
-                <td>{{ $item->parent_id }}</td>
+                <td {{ ($item->parent_id == 1) ? 'style=color:#b8b8b8' : '' }} >{{ $item->parentTitle }}</td>
             </tr>
         @endforeach
         </tbody>

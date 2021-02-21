@@ -3,12 +3,14 @@
 namespace App\Http\Controllers\Blog\Admin;
 
 
+use App\Http\Requests\Blog\Admin\PostCreateRequest;
 use App\Http\Requests\Blog\Admin\PostUpdateRequest;
+use App\Models\BlogPost;
 use App\Repositories\Blog\BlogCategoryRepository;
 use App\Repositories\Blog\BlogPostRepository;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
-use Carbon\Carbon;
+
 
 class PostController extends Controller
 {
@@ -46,18 +48,30 @@ class PostController extends Controller
      */
     public function create()
     {
-        //
+        $categories = $this->categoryRepository->GetForSelect();
+
+        return view('admin.posts.create', compact('categories'));
     }
 
     /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
+     * @param PostCreateRequest $request
+     * @return \Illuminate\Http\RedirectResponse
      */
-    public function store(Request $request)
+    public function store(PostCreateRequest $request)
     {
-        //
+        $data = $request->input();
+
+        $result = (new BlogPost())->create($data);
+
+        if($result){
+            return redirect()
+                ->route('blog.admin.posts.edit', [$result->id])
+                ->with(['success'=>'The post was added!']);
+        }else{
+            return back()
+                ->withErrors(['msg'=>'The post was not added! Please try again!'])
+                ->withInput();
+        }
     }
 
     /**
@@ -94,22 +108,10 @@ class PostController extends Controller
     {
         $data = $request->all();
 
-        /**
-         * Switcher
-         */
-        $data['is_published'] = (empty($data['is_published'])) ? 0 : 1;
-
         $item = $this->postRepository->GetEdit($id);
         if(empty($item)){
             return back()
                 ->withErrors(['msg'=>"The post is not found!"]);
-        }
-
-        /**
-         * если публикуем первый раз, то добавляем дату
-         */
-        if(empty($item->published_at) && $data['is_published']){
-            $item->published_at = Carbon::now();
         }
 
         $result = $item
@@ -133,6 +135,40 @@ class PostController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $item = $this->postRepository->GetEdit($id);
+        if(empty($item)){
+            return back()
+                ->withErrors(['msg'=>"The post is not found!"]);
+        }
+
+        $result = BlogPost::destroy($id);
+
+        if($result){
+            return redirect()
+                ->route('blog.admin.posts.index')
+                ->with([
+                    'success'=>"The post was deleted successful!",
+                    'restore'=>$id
+                ]);
+        }else{
+            return back()
+                ->withErrors(['msg'=>"The post was not deleted!"]);
+        }
+    }
+
+    /**
+     * @param $id
+     */
+    public function restore($id){
+        $result = BlogPost::withTrashed()->find($id)->restore();
+
+        if($result){
+            return redirect()
+                ->back()
+                ->with(['success'=>"The post was recovered successful!"]);
+        }else{
+            return back()
+                ->withErrors(['msg'=>"The post was not recovered!"]);
+        }
     }
 }

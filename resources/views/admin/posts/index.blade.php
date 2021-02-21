@@ -16,6 +16,7 @@
                 Create post</a>
         </div>
     </div>
+    @include('admin.inc.errors')
     <table class="table table-sm table-striped">
         <thead>
         <tr>

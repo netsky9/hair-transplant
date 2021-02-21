@@ -1,58 +1,45 @@
 @extends('admin.layouts.app')
 
-@section('title') Create new category @endsection
+@section('title') Create new post @endsection
 
 @section('content')
     <br>
     <h1 class="title">
-        Create new category
+        Create new post
     </h1>
     <br>
-    <form method="post" action="{{ route('blog.admin.categories.store') }}">
+    <form method="post" action="{{ route('blog.admin.posts.store') }}">
         {{ csrf_field() }}
         <div class="row">
             <div class="col-sm-8">
-                @if($errors->any())
-                    <div class="alert alert-danger alert-dismissible fade show" role="alert">
-                        @foreach($errors->all() as $error)
-                            {{ $error }}
-                        @endforeach
-                        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                            <span aria-hidden="true">&times;</span>
-                        </button>
-                    </div>
-                @endif
-                @if(session('success'))
-                    <div class="alert alert-success alert-dismissible fade show" role="alert">
-                        {{ session()->get('success') }}
-                        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                            <span aria-hidden="true">&times;</span>
-                        </button>
-                    </div>
-                @endif
+                @include('admin.inc.errors')
                 <div class="card p-3">
                     <label for="title" class="form-label">Title</label>
-                    <input type="text" class="form-control" name="title" id="title" value="{{ old('title') }}" required>
+                    <input type="text" class="form-control" name="title" id="title" placeholder="" value="{{ old('title') }}" required>
 
-                    <label for="slug" class="form-label">Slug</label>
-                    <input type="text" class="form-control" name="slug" id="slug" value="{{ old('slug') }}" >
+                    <label for="slug" class="form-label mt-3">Slug</label>
+                    <input type="text" class="form-control" name="slug" id="slug" placeholder="" value="{{ old('slug') }}" >
 
-                    <label for="parent_id" class="form-label">Parent category</label>
-                    <select class="custom-select" name="parent_id" id="parent_id" required="">
-                        @foreach($categoryList as $item)
-                            <option value="{{ $item->id }}" @if(old('parent_id') == $item->id) {{ 'selected' }} @endif>
-                                {{ $item->title }}
-                            </option>
-                        @endforeach
-                    </select>
+                    <label for="excerpt" class="form-label mt-3">Short description of article</label>
+                    <textarea class="form-control" name="excerpt" id="excerpt" cols="30" rows="3">{{ old('excerpt') }}</textarea>
 
-                    <label for="description" class="form-label">Description</label>
-                    <textarea class="form-control" name="description" id="description" cols="10" rows="5">{{ old('description') }}</textarea>
+                    <label for="content_raw" class="form-label mt-3">Content of article</label>
+                    <textarea class="form-control" name="content_raw" id="content_raw" cols="30" rows="14">{{ old('content_raw') }}</textarea>
                 </div>
             </div>
             <div class="col-sm-3">
                 <div class="card p-3 mb-3">
-                    <input type="submit" class="btn btn-primary" value="Submit">
+                    <input type="submit" class="btn btn-primary" value="Create">
+                </div>
+                <div class="card p-3 mb-3">
+                    <label for="category_id" class="form-label">Category</label>
+                    <select class="custom-select" name="category_id" id="category_id" required="">
+                        @foreach($categories as $category)
+                            <option value="{{ $category->id }}" @if($category->id == old('category_id')) {{ 'selected' }} @endif>
+                                {{ $category->title }}
+                            </option>
+                        @endforeach
+                    </select>
                 </div>
             </div>
         </div>

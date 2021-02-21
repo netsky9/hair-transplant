@@ -19,7 +19,7 @@
                     <input type="text" class="form-control" name="title" id="title" placeholder="" value="{{ $category->title }}" required>
 
                     <label for="slug" class="form-label">Slug</label>
-                    <input type="text" class="form-control" name="slug" id="slug" placeholder="" value="{{ $category->slug }}" required>
+                    <input type="text" class="form-control" name="slug" id="slug" placeholder="" value="{{ $category->slug }}">
 
                     @if($category->parent_id != 0)
                         <label for="parent_id" class="form-label">Parent category</label>

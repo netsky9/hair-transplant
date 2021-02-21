@@ -26,7 +26,7 @@ class CategoryUpdateRequest extends FormRequest
         return [
             'title' => 'required|min:5|max:200',
             'parent_id' => 'required|integer|exists:blog_categories,id',
-            'slug' => 'string|min:5|max:200',
+            'slug' => 'max:200',
             'description' => 'max:500',
         ];
     }

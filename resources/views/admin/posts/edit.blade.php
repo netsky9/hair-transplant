@@ -6,6 +6,9 @@
     <br>
     <h1 class="title h2">
         Edit post "{{ $item->title }}"
+        @if(!$item->is_published)
+            <span class="badge badge-danger">Not published</span>
+        @endif
     </h1>
     <br>
     <form method="post" action="{{ route('blog.admin.posts.update', $item->id) }}">
@@ -19,7 +22,7 @@
                     <input type="text" class="form-control" name="title" id="title" placeholder="" value="{{ $item->title }}" required>
 
                     <label for="slug" class="form-label mt-3">Slug</label>
-                    <input type="text" class="form-control" name="slug" id="slug" placeholder="" value="{{ $item->slug }}" required>
+                    <input type="text" class="form-control" name="slug" id="slug" placeholder="" value="{{ $item->slug }}" >
 
                     <label for="excerpt" class="form-label mt-3">Short description of article</label>
                     <textarea class="form-control" name="excerpt" id="excerpt" cols="30" rows="3">{{ $item->excerpt }}</textarea>
@@ -92,6 +95,12 @@
                         </li>
                     @endif
                 </ul>
+                <div class="card p-3 mb-3">
+                    <form method="post" action="{{ route('blog.posts.destroy', $item->id) }}">
+                        {{ method_field('delete') }}
+                        <button class="btn btn-link stretched-link text-danger" type="submit">Delete post</button>
+                    </form>
+                </div>
             </div>
         </div>
     </form>
