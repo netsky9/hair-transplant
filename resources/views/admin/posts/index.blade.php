@@ -3,8 +3,7 @@
 @section('title') Posts @endsection
 
 @section('content')
-    <br>
-    <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pb-2 mb-1">
+    <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pb-2 mb-1 mt-3">
         <h1 class="title">
             Posts
         </h1>
@@ -17,13 +16,13 @@
         </div>
     </div>
     @include('admin.inc.errors')
-    <table class="table table-sm table-striped">
+    <table class="table table-sm table-striped border">
         <thead>
         <tr>
             <th scope="col">#</th>
+            <th scope="col">Title</th>
             <th scope="col">Category</th>
             <th scope="col">User</th>
-            <th scope="col">Title</th>
             <th scope="col">Status</th>
         </tr>
         </thead>
@@ -31,13 +30,13 @@
         @foreach($pagination as $item)
             <tr>
                 <th scope="row">{{ $item->id }}</th>
+                <td><a href="{{ route('blog.admin.posts.edit', $item->id) }}">{{ $item->title }}</a></td>
                 <th scope="row">
                     <a href="{{ route('blog.admin.categories.edit', $item->category_id) }}">
                         {{ $item->category->title }}
                     </a>
                 </th>
                 <th scope="row">{{ $item->user->name }}</th>
-                <td><a href="{{ route('blog.admin.posts.edit', $item->id) }}">{{ $item->title }}</a></td>
                 <th scope="row">
                     @if($item->is_published)
                         <span class="badge badge-success">
