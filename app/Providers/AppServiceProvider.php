@@ -4,8 +4,10 @@ namespace App\Providers;
 
 use App\Models\BlogCategory;
 use App\Models\BlogPost;
+use App\Models\Clinic;
 use App\Observers\Blog\BlogCategoryObserver;
 use App\Observers\Blog\BlogPostObserver;
+use App\Observers\Clinics\ClinicObserver;
 use Illuminate\Support\ServiceProvider;
 use Illuminate\Support\Facades\Schema;
 
@@ -35,5 +37,6 @@ class AppServiceProvider extends ServiceProvider
          */
         BlogPost::observe(BlogPostObserver::class);
         BlogCategory::observe(BlogCategoryObserver::class);
+        Clinic::observe(ClinicObserver::class);
     }
 }

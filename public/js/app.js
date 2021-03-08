@@ -1842,6 +1842,8 @@ module.exports = {
 
 __webpack_require__(/*! ./bootstrap */ "./resources/js/bootstrap.js");
 
+__webpack_require__(/*! ./drag-and-drop */ "./resources/js/drag-and-drop.js");
+
 /***/ }),
 
 /***/ "./resources/js/bootstrap.js":
@@ -1872,6 +1874,25 @@ window.axios.defaults.headers.common['X-Requested-With'] = 'XMLHttpRequest';
 //     cluster: process.env.MIX_PUSHER_APP_CLUSTER,
 //     forceTLS: true
 // });
+
+/***/ }),
+
+/***/ "./resources/js/drag-and-drop.js":
+/*!***************************************!*\
+  !*** ./resources/js/drag-and-drop.js ***!
+  \***************************************/
+/***/ (() => {
+
+$(document).ready(function () {
+  Dropzone.options.myAwesomeDropzone = {
+    paramName: "file",
+    // The name that will be used to transfer the file
+    maxFilesize: 2,
+    // MB
+    dictDefaultMessage: 'Drag and drop to loading',
+    acceptedFiles: '.jpg, .jpeg, .png'
+  };
+});
 
 /***/ }),
 

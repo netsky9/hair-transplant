@@ -106,6 +106,7 @@ class PostController extends Controller
      */
     public function update(PostUpdateRequest $request, $id)
     {
+
         $data = $request->all();
 
         $item = $this->postRepository->GetEdit($id);

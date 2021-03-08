@@ -51,3 +51,14 @@ Route::prefix('admin/blog')->namespace('\App\Http\Controllers\Blog\Admin')->grou
     ]);
 });
 Route::get('admin/blog/posts/restore/{post}', [\App\Http\Controllers\Blog\Admin\PostController::class, 'restore'])->name('blog.admin.posts.restore');
+
+
+Route::prefix('admin/clinics')->namespace('\App\Http\Controllers\Clinics\Admin')->group(function () {
+    /**
+     * Clinica routes
+     */
+    Route::resource('posts', ClinicController::class, [
+        'names'=>'clinics.admin.posts'
+    ]);
+});
+Route::post('admin/clinics/posts/upload/{post}', [\App\Http\Controllers\Clinics\Admin\ClinicController::class, 'upload'])->name('clinics.admin.posts.upload');

@@ -1,12 +1,11 @@
 <?php
 
-namespace App\Repositories\Blog;
+namespace App\Repositories\Clinics;
 
-use App\Models\BlogPost as Model;
+use App\Models\Clinic as Model;
 use App\Repositories\CoreRepository;
 
-
-class BlogPostRepository extends CoreRepository {
+class ClinicsPostRepository extends CoreRepository {
 
     /**
      * Отправляем модель, для создания объекта
@@ -26,21 +25,22 @@ class BlogPostRepository extends CoreRepository {
         return $this->instanceModel()->find($id);
     }
 
+    /**
+     * Получение записей с постраничной навигацией
+     * @param int $count
+     * @return mixed
+     */
     public function GetAllWithPagination($count = 20){
         $columns = [
             'id',
-            'category_id',
             'user_id',
             'title',
-            'is_published',
-            'published_at',
+            'updated_at',
         ];
 
         $result = $this
             ->instanceModel()
-            ->with('category:id,title')
             ->with('user:id,name')
-            ->orderBy('id', 'desc')
             ->paginate($count, $columns);
 
         return $result;

@@ -17,3 +17,14 @@ html, body {
 .black-pagination .page-item .page-link:focus {
   box-shadow: none;
 }
+
+.dropzone {
+  min-height: 300px;
+  border: 2px dashed rgba(0, 0, 0, 0.3) !important;
+  background: #fff;
+  padding: 30px 20px;
+}
+
+.dropzone .dz-preview .dz-image {
+  border-radius: 3px !important;
+}

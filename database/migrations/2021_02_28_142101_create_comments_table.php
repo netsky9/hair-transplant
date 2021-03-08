@@ -17,7 +17,7 @@ class CreateCommentsTable extends Migration
             $table->id();
             $table->timestamps();
 
-            $table->unsignedBigInteger('comment_id')->unsigned();
+            $table->unsignedBigInteger('comment_id')->unsigned()->default(0);
             $table->unsignedBigInteger('report_id')->unsigned();
             $table->unsignedBigInteger('user_id')->unsigned();
 
@@ -26,10 +26,10 @@ class CreateCommentsTable extends Migration
             /**
              * При удалении родительского коммента удаляем и дочерние
              */
-            $table->foreign('comment_id')
-                ->references('id')
-                ->on('comments')
-                ->onDelete('cascade');
+//            $table->foreign('comment_id')
+//                ->references('id')
+//                ->on('comments')
+//                ->onDelete('cascade');
 
             /**
              * При удалении отчета удаляем и комментарии
