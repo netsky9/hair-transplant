@@ -24,14 +24,6 @@ class CreateCommentsTable extends Migration
             $table->text('text');
 
             /**
-             * При удалении родительского коммента удаляем и дочерние
-             */
-//            $table->foreign('comment_id')
-//                ->references('id')
-//                ->on('comments')
-//                ->onDelete('cascade');
-
-            /**
              * При удалении отчета удаляем и комментарии
              */
             $table->foreign('report_id')
