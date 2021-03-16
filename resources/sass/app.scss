@@ -1,12 +1,8 @@
-
 // Fonts
-@import url("https://fonts.googleapis.com/css?family=Raleway:300,400,600");
+@import url('https://fonts.googleapis.com/css?family=Nunito');
 
 // Variables
-@import "variables";
+@import 'variables';
 
-// Custom
-@import "custom";
-
-// Drag and drop
-@import "drag-and-drop";
+// Bootstrap
+@import '~bootstrap/scss/bootstrap';

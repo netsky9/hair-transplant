@@ -5,5 +5,13 @@
         <a class="p-2 text-dark" href="{{ route('about') }}">About</a>
         <a class="p-2 text-dark" href="{{ route('contact') }}">Contact</a>
     </nav>
-    <a class="btn btn-outline-primary" href="#">Sign up</a>
+    @if(Auth::check())
+        <form method="post" action="{{ route('logout') }}">
+            @csrf
+            <input class="btn btn-outline-primary" type="submit" value="Logout">
+        </form>
+    @else
+        <a class="btn btn-outline-primary" href="{{ route('login') }}">Sign up</a>
+    @endif
+
 </div>

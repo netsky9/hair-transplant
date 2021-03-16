@@ -27,14 +27,20 @@ Route::get('/contact', function () {
 
 Route::post('/contact/form', [ContactController::class, 'submit'])->name('contact-form');
 
-// неймспейс - это папка
 Route::prefix('blog')->namespace('\App\Http\Controllers\Blog')->group(function () {
     Route::resource('posts', PostController::class, [
         'names'=>'blog.posts'
     ]);
 });
+Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 
-Route::prefix('admin/blog')->namespace('\App\Http\Controllers\Blog\Admin')->group(function () {
+Auth::routes();
+
+
+/**
+ * Admin panel
+ */
+Route::middleware(['auth', 'isadmin'])->prefix('admin/blog')->namespace('\App\Http\Controllers\Blog\Admin')->group(function () {
     /**
      * Categories routes
      */
@@ -50,10 +56,15 @@ Route::prefix('admin/blog')->namespace('\App\Http\Controllers\Blog\Admin')->grou
         'names'=>'blog.admin.posts'
     ]);
 });
-Route::get('admin/blog/posts/restore/{post}', [\App\Http\Controllers\Blog\Admin\PostController::class, 'restore'])->name('blog.admin.posts.restore');
+/**
+ * Restore deleted post
+ */
+Route::get('admin/blog/posts/restore/{post}', [\App\Http\Controllers\Blog\Admin\PostController::class, 'restore'])
+    ->name('blog.admin.posts.restore')
+    ->middleware(['auth', 'isadmin']);
 
 
-Route::prefix('admin/clinics')->namespace('\App\Http\Controllers\Clinics\Admin')->group(function () {
+Route::middleware(['auth', 'isadmin'])->prefix('admin/clinics')->namespace('\App\Http\Controllers\Clinics\Admin')->group(function () {
     /**
      * Clinica routes
      */
@@ -61,4 +72,12 @@ Route::prefix('admin/clinics')->namespace('\App\Http\Controllers\Clinics\Admin')
         'names'=>'clinics.admin.posts'
     ]);
 });
-Route::post('admin/clinics/posts/upload/{post}', [\App\Http\Controllers\Clinics\Admin\ClinicController::class, 'upload'])->name('clinics.admin.posts.upload');
+
+/**
+ * Upload clinic's gallery
+ */
+Route::post('admin/clinics/posts/upload/{post}', [\App\Http\Controllers\Clinics\Admin\ClinicController::class, 'upload'])
+    ->name('clinics.admin.posts.upload')
+    ->middleware(['auth', 'isadmin']);
+
+
