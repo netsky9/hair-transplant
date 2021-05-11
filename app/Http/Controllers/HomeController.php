@@ -3,9 +3,16 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Repositories\Blog\BlogPostRepository;
 
 class HomeController extends Controller
 {
+    /**
+     * Blog post repository
+     * @var
+     */
+    protected $blogPostRepository;
+
     /**
      * Create a new controller instance.
      *
@@ -14,6 +21,7 @@ class HomeController extends Controller
     public function __construct()
     {
         $this->middleware('auth');
+        $this->blogPostRepository = new BlogPostRepository();
     }
 
     /**
@@ -23,6 +31,7 @@ class HomeController extends Controller
      */
     public function index()
     {
-        return view('home');
+        $blogPosts = $this->blogPostRepository->GetAllWithPagination();
+        return view('home', compact('blogPosts'));
     }
 }

@@ -13,10 +13,6 @@ use \App\Http\Controllers\ContactController;
 |
 */
 
-Route::get('/', function () {
-    return view('home');
-})->name('home');
-
 Route::get('/about', function () {
     return view('about');
 })->name('about');
@@ -27,12 +23,12 @@ Route::get('/contact', function () {
 
 Route::post('/contact/form', [ContactController::class, 'submit'])->name('contact-form');
 
-Route::prefix('blog')->namespace('\App\Http\Controllers\Blog')->group(function () {
-    Route::resource('posts', PostController::class, [
-        'names'=>'blog.posts'
-    ]);
+Route::prefix('blog')->group(function () {
+    Route::get('/posts', [\App\Http\Controllers\Blog\PostController::class, 'index'])->name('blog.posts');
+    Route::get('/posts/{slug}', [\App\Http\Controllers\Blog\PostController::class, 'show'])->name('blog.posts.show');
 });
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
+Route::get('/', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 
 Auth::routes();
 

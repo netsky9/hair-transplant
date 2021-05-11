@@ -95,12 +95,12 @@
                         </li>
                     @endif
                 </ul>
-                <div class="card p-3 mb-3">
-                    <form method="post" action="{{ route('blog.posts.destroy', $item->id) }}">
-                        {{ method_field('delete') }}
-                        <button class="btn btn-link stretched-link text-danger" type="submit">Delete post</button>
-                    </form>
-                </div>
+                {{--<div class="card p-3 mb-3">--}}
+                    {{--<form method="post" action="{{ route('blog.admin.posts.destroy', $item->id) }}">--}}
+                        {{--{{ method_field('delete') }}--}}
+                        {{--<button class="btn btn-link stretched-link text-danger" type="submit">Delete post</button>--}}
+                    {{--</form>--}}
+                {{--</div>--}}
             </div>
         </div>
     </form>

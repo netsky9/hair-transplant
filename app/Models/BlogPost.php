@@ -30,4 +30,12 @@ class BlogPost extends Model
     public function user(){
         return $this->belongsTo(User::class);
     }
+
+    /**
+     * Аксессор для форматирования даты
+     * @return string
+     */
+    public function getPublishedAtAttribute($value){
+        return \Carbon\Carbon::parse($value)->format('M d Y');
+    }
 }
